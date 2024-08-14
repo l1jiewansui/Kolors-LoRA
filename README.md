@@ -1,5 +1,5 @@
 # 实战演练一一基于话剧的连环画制作 #
-## Chatgpt ##
+## 1.Chatgpt理解代码 ##
 这个项目主要是围绕通过 `Data-Juicer` 和 `DiffSynth-Studio` 来处理数据和训练 LoRA 模型，然后生成图像的流程。下面我将逐步解释每个部分的作用和过程。
 
 ### 1. 安装依赖库
@@ -252,3 +252,21 @@ image
 5. 下载和训练 LoRA 模型。
 6. 使用微调后的模型生成图像。
 7. 最后，将生成的图像拼接在一起进行展示。
+
+## 2.通过爬虫获取二次元风格图片和描述 ##
+
+**Pixiv**
+
+- Pixiv 是一个著名的二次元插画和漫画分享平台，拥有大量高质量的二次元风格图像。可以通过Pixiv API或者使用爬虫工具获取图片和相关描述。
+- Pixiv API 相关链接：[Pixiv API](https://github.com/upbit/pixivpy)
+- 示例爬虫项目：[Pixiv Crawler](https://github.com/KyuubiRan/pixiv_crawler)
+
+**Sankaku Complex**
+
+- Sankaku Complex 是一个涵盖多种二次元风格图片的社交平台，可以通过爬虫工具获取带有标签和描述的二次元图片。
+- Sankaku Complex Crawler 示例项目：[Sankaku Complex Crawler](https://github.com/RaenonX/SankakuCacher)
+
+**Danbooru**
+
+- Danbooru 也可以通过爬虫工具获取图片及其对应的标签，然后将标签转换为文本描述，形成文生图数据集。
+- Danbooru Crawler 示例项目：[Danbooru Crawler](https://github.com/KyuubiRan/danbooru-crawler)
