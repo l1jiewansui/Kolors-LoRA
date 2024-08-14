@@ -281,7 +281,11 @@ image
 
 使用预训练的自然语言处理模型（如OpenAI的CLIP或Hugging Face上的BERT模型），您可以将图片标签转换为自然语言描述。这些描述可以与图片配对，形成文生图数据集。
 
+使用预训练的自然语言处理模型（如OpenAI的CLIP或Hugging Face上的BERT模型），您可以将图片标签转换为自然语言描述。这些描述可以与图片配对，形成文生图数据集。
+
 **示例代码**：
+
+```
 python复制代码from transformers import CLIPProcessor, CLIPModel
 from PIL import Image
 import requests
@@ -296,5 +300,8 @@ outputs = model(**inputs)
 logits_per_image = outputs.logits_per_image
 probs = logits_per_image.softmax(dim=1)
 print(probs)
+```
+
+通过这些方法，您可以获得或构建一个高质量的二次元风格文生图数据集，用于模型训练和微调。
 
 
