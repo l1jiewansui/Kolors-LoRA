@@ -270,3 +270,10 @@ image
 
 - Danbooru 也可以通过爬虫工具获取图片及其对应的标签，然后将标签转换为文本描述，形成文生图数据集。
 - Danbooru Crawler 示例项目：[Danbooru Crawler](https://github.com/KyuubiRan/danbooru-crawler)
+
+最终采用的项目：https://github.com/IrisRainbowNeko/pixiv_AI_crawler
+
+爬取命令：python AIcrawler.py --ckpt 模型权重 --n_images 总图像个数 [--keyword 关键字] 
+
+示例图片：![Uploading 121124788_p0.jpg…]()
+
