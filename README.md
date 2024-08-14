@@ -374,11 +374,27 @@ lora_path="models/lightning_logs/version_1/checkpoints/epoch=0-step=500.ckpt"
 
 图片对比
 
+原lora
+
 ![11](https://github.com/user-attachments/assets/392170df-91bb-41db-b3ef-2889eafaaf52)
+
+新lora
 
 ![1](https://github.com/user-attachments/assets/ea1a4079-f373-4804-a65a-556321c0095b)
 
-可以看到差别不大，说明lora本身的影响并不大，当lora-alpha跳到4后：
+可以看到差别不大，说明lora本身的影响并不大，当lora-alpha跳到4后，原lora：
 
 ![111](https://github.com/user-attachments/assets/8e83f247-e664-4bd2-bfc5-9a3fca7b6ba9)
+
+可以显著看出简笔画的风格。
+
+另一个对比：二次元，一个银色长发的少女，穿着黑色比基尼，站在海滩上，手中拿着帽子，神情严肃，全身，背景是蓝色的大海和天空
+
+原lora
+
+![21](https://github.com/user-attachments/assets/801b75e1-804d-40e3-a923-c43b7a2bc38d)
+
+新lora
+
+![31](https://github.com/user-attachments/assets/6bda8f9a-12f0-49d3-a194-68796ed21d0c)
 
