@@ -1,25 +1,28 @@
 # 实战演练一一基于话剧的连环画制作 #
 ## Chatgpt ##
-这个项目主要是围绕通过 Data-Juicer 和 DiffSynth-Studio 来处理数据和训练 LoRA 模型，然后生成图像的流程。下面我将逐步解释每个部分的作用和过程。
+这个项目主要是围绕通过 `Data-Juicer` 和 `DiffSynth-Studio` 来处理数据和训练 LoRA 模型，然后生成图像的流程。下面我将逐步解释每个部分的作用和过程。
 
-1. 安装依赖库
-python
-复制代码
-!pip install simple-aesthetics-predictor
+### 1. 安装依赖库
+
+```
+python复制代码!pip install simple-aesthetics-predictor
 !pip install -v -e data-juicer
 !pip uninstall pytorch-lightning -y
 !pip install peft lightning pandas torchvision
 !pip install -e DiffSynth-Studio
-作用：
+```
 
-simple-aesthetics-predictor: 这是一个用于图像美学评分的库。
-data-juicer: 这是一个用于数据处理的工具，可以帮助你进行数据的提取、转换和加载。
-pytorch-lightning: PyTorch Lightning 是一个用于简化 PyTorch 训练的库，安装了 peft、lightning、pandas 和 torchvision 这些常用库。首先卸载旧版本的 pytorch-lightning 以避免潜在的兼容性问题。
-DiffSynth-Studio: 这是一个用于高效微调大模型的工具，主要用于 LoRA 的训练和生成任务。
-2. 下载和处理数据集
-python
-复制代码
-from modelscope.msdatasets import MsDataset
+**作用**：
+
+- **simple-aesthetics-predictor**: 这是一个用于图像美学评分的库。
+- **data-juicer**: 这是一个用于数据处理的工具，可以帮助你进行数据的提取、转换和加载。
+- **pytorch-lightning**: PyTorch Lightning 是一个用于简化 PyTorch 训练的库，安装了 peft、lightning、pandas 和 torchvision 这些常用库。首先卸载旧版本的 `pytorch-lightning` 以避免潜在的兼容性问题。
+- **DiffSynth-Studio**: 这是一个用于高效微调大模型的工具，主要用于 LoRA 的训练和生成任务。
+
+### 2. 下载和处理数据集
+
+```
+python复制代码from modelscope.msdatasets import MsDataset
 
 ds = MsDataset.load(
     'AI-ModelScope/lowres_anime',
@@ -27,13 +30,16 @@ ds = MsDataset.load(
     split='train',
     cache_dir="/mnt/workspace/kolors/data"
 )
-作用：
+```
 
-通过 ModelScope 下载名为 lowres_anime 的数据集，并将其缓存到指定的目录 /mnt/workspace/kolors/data 中。这个数据集将用于训练 LoRA 模型。
-3. 数据预处理
-python
-复制代码
-import json, os
+**作用**：
+
+- 通过 `ModelScope` 下载名为 `lowres_anime` 的数据集，并将其缓存到指定的目录 `/mnt/workspace/kolors/data` 中。这个数据集将用于训练 LoRA 模型。
+
+### 3. 数据预处理
+
+```
+python复制代码import json, os
 from data_juicer.utils.mm_utils import SpecialTokens
 from tqdm import tqdm
 
@@ -47,14 +53,17 @@ with open("./data/data-juicer/input/metadata.jsonl", "w") as f:
         metadata = {"text": "二次元", "image": [f"/mnt/workspace/kolors/data/lora_dataset/train/{data_id}.jpg"]}
         f.write(json.dumps(metadata))
         f.write("\n")
-作用：
+```
 
-将下载的数据集进行处理，生成 RGB 格式的图片，并将这些图片保存到指定目录中。
-生成一个包含图片路径和描述（text）的元数据文件 metadata.jsonl，以供后续的处理和过滤。
-4. 配置和执行 Data-Juicer 数据过滤
-python
-复制代码
-data_juicer_config = """
+**作用**：
+
+- 将下载的数据集进行处理，生成 RGB 格式的图片，并将这些图片保存到指定目录中。
+- 生成一个包含图片路径和描述（`text`）的元数据文件 `metadata.jsonl`，以供后续的处理和过滤。
+
+### 4. 配置和执行 Data-Juicer 数据过滤
+
+```
+python复制代码data_juicer_config = """
 # global parameters
 project_name: 'data-process'
 dataset_path: './data/data-juicer/input/metadata.jsonl'
@@ -82,14 +91,17 @@ with open("data/data-juicer/data_juicer_config.yaml", "w") as file:
     file.write(data_juicer_config.strip())
 
 !dj-process --config data/data-juicer/data_juicer_config.yaml
-作用：
+```
 
-这里定义了 Data-Juicer 的配置文件，主要是用于过滤掉不符合要求的图片。比如尺寸不符合要求的图片会被过滤掉。
-过滤后的数据会保存在 result.jsonl 文件中。
-5. 生成经过筛选的训练数据集
-python
-复制代码
-import pandas as pd
+**作用**：
+
+- 这里定义了 Data-Juicer 的配置文件，主要是用于过滤掉不符合要求的图片。比如尺寸不符合要求的图片会被过滤掉。
+- 过滤后的数据会保存在 `result.jsonl` 文件中。
+
+### 5. 生成经过筛选的训练数据集
+
+```
+python复制代码import pandas as pd
 import os, json
 from PIL import Image
 from tqdm import tqdm
@@ -112,22 +124,28 @@ data_frame["file_name"] = file_names
 data_frame["text"] = texts
 data_frame.to_csv("./data/lora_dataset_processed/train/metadata.csv", index=False, encoding="utf-8-sig")
 data_frame
-作用：
+```
 
-读取过滤后的数据，生成最终的训练数据集，并将其保存到 ./data/lora_dataset_processed/train 目录中。同时生成一个 metadata.csv 文件，保存图片名称和描述信息。
-6. 下载和训练 LoRA 模型
-python
-复制代码
-from diffsynth import download_models
+**作用**：
+
+- 读取过滤后的数据，生成最终的训练数据集，并将其保存到 `./data/lora_dataset_processed/train` 目录中。同时生成一个 `metadata.csv` 文件，保存图片名称和描述信息。
+
+### 6. 下载和训练 LoRA 模型
+
+```
+python复制代码from diffsynth import download_models
 
 download_models(["Kolors", "SDXL-vae-fp16-fix"])
-作用：
+```
 
-下载用于训练的基础模型（如 Kolors 和 SDXL-vae-fp16-fix）。
-7. 执行 LoRA 训练
-python
-复制代码
-import os
+**作用**：
+
+- 下载用于训练的基础模型（如 Kolors 和 SDXL-vae-fp16-fix）。
+
+### 7. 执行 LoRA 训练
+
+```
+python复制代码import os
 cmd = """
 python DiffSynth-Studio/examples/train/kolors/train_kolors_lora.py \
   --pretrained_unet_path models/kolors/Kolors/unet/diffusion_pytorch_model.safetensors \
@@ -144,13 +162,16 @@ python DiffSynth-Studio/examples/train/kolors/train_kolors_lora.py \
 """.strip()
 
 os.system(cmd)
-作用：
+```
 
-运行训练脚本，对预训练的 UNet 和文本编码器模型进行 LoRA 微调，训练结果会保存到指定的 ./models 目录中。
-8. 加载微调后的模型并生成图像
-python
-复制代码
-from diffsynth import ModelManager, SDXLImagePipeline
+**作用**：
+
+- 运行训练脚本，对预训练的 UNet 和文本编码器模型进行 LoRA 微调，训练结果会保存到指定的 `./models` 目录中。
+
+### 8. 加载微调后的模型并生成图像
+
+```
+python复制代码from diffsynth import ModelManager, SDXLImagePipeline
 from peft import LoraConfig, inject_adapter_in_model
 import torch
 
@@ -193,13 +214,16 @@ image = pipe(
     height=1024, width=1024,
 )
 image.save("1.jpg")
-作用：
+```
 
-加载微调后的 LoRA 模型，并生成一张指定的图片。生成的图片保存在当前工作目录下，文件名为 1.jpg。
-9. 图像拼接
-python
-复制代码
-import numpy as np
+**作用**：
+
+- 加载微调后的 LoRA 模型，并生成一张指定的图片。生成的图片保存在当前工作目录下，文件名为 `1.jpg`。
+
+### 9. 图像拼接
+
+```
+python复制代码import numpy as np
 from PIL import Image
 
 images = [np.array(Image.open(f"{i}.jpg")) for i in range(1, 9)]
@@ -211,16 +235,20 @@ image = np.concatenate([
 ], axis=0)
 image = Image.fromarray(image).resize((1024, 2048))
 image
-作用：
+```
 
-将生成的图像拼接在一起，生成一个大的图像，以便查看多个图像的拼接效果。
-总结
+**作用**：
+
+- 将生成的图像拼接在一起，生成一个大的图像，以便查看多个图像的拼接效果。
+
+### 总结
+
 这个项目的主要流程是：
 
-安装所需的依赖库。
-从数据集中下载和处理数据。
-使用 Data-Juicer 进行数据的过滤和处理。
-生成符合要求的训练数据。
-下载和训练 LoRA 模型。
-使用微调后的模型生成图像。
-最后，将生成的图像拼接在一起进行展示。
+1. 安装所需的依赖库。
+2. 从数据集中下载和处理数据。
+3. 使用 Data-Juicer 进行数据的过滤和处理。
+4. 生成符合要求的训练数据。
+5. 下载和训练 LoRA 模型。
+6. 使用微调后的模型生成图像。
+7. 最后，将生成的图像拼接在一起进行展示。
