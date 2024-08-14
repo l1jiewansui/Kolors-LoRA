@@ -378,3 +378,7 @@ lora_path="models/lightning_logs/version_1/checkpoints/epoch=0-step=500.ckpt"
 
 ![1](https://github.com/user-attachments/assets/ea1a4079-f373-4804-a65a-556321c0095b)
 
+可以看到差别不大，说明lora本身的影响并不大，当lora-alpha跳到4后：
+
+![111](https://github.com/user-attachments/assets/8e83f247-e664-4bd2-bfc5-9a3fca7b6ba9)
+
