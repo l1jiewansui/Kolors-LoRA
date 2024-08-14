@@ -330,3 +330,38 @@ with open("./data/data-juicer/input/metadata.jsonl", "w") as f:
             f.write(json.dumps(metadata))
             f.write("\n")
 ```
+
+### 修改图片格式
+
+```
+import pandas as pd
+import os, json
+from PIL import Image
+from tqdm import tqdm
+
+texts, file_names = [], []
+os.makedirs("./data/lora_dataset_processed/train", exist_ok=True)
+
+with open("./data/data-juicer/output/result.jsonl", "r") as file:
+    for data_id, data in enumerate(tqdm(file.readlines())):
+        data = json.loads(data)
+        text = data["text"]
+        texts.append(text)
+        
+        # 打开图像并检查其模式
+        image = Image.open(data["image"][0])
+        if image.mode == 'RGBA':
+            # 将图像从 RGBA 转换为 RGB
+            image = image.convert('RGB')
+        
+        image_path = f"./data/lora_dataset_processed/train/{data_id}.jpg"
+        image.save(image_path, 'JPEG')  # 明确指定保存为 JPEG 格式
+        file_names.append(f"{data_id}.jpg")
+
+data_frame = pd.DataFrame()
+data_frame["file_name"] = file_names
+data_frame["text"] = texts
+data_frame.to_csv("./data/lora_dataset_processed/train/metadata.csv", index=False, encoding="utf-8-sig")
+
+print(data_frame)
+```
