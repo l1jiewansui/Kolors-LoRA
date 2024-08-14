@@ -300,6 +300,33 @@ probs = logits_per_image.softmax(dim=1)
 print(probs)
 ```
 
-通过这些方法，您可以获得或构建一个高质量的二次元风格文生图数据集，用于模型训练和微调。
+通过这些方法，可以获得或构建一个高质量的二次元风格文生图数据集，用于模型训练和微调。
 
+## 4.更新baseline代码 ##
 
+### 修改数据集
+
+注意绝对路径
+```
+import os
+import json
+from tqdm import tqdm
+
+# 定义图片所在的目录
+image_directory = "./data/dataset1/train"
+
+# 确保保存 metadata.jsonl 的目录存在
+os.makedirs("./data/data-juicer/input", exist_ok=True)
+
+# 创建 metadata.jsonl 文件
+with open("./data/data-juicer/input/metadata.jsonl", "w") as f:
+    for image_filename in tqdm(os.listdir(image_directory)):
+        if image_filename.endswith(('.jpg', '.png', '.jpeg')):  # 确保只处理图片文件
+            # 获取图片的完整路径
+            image_path = os.path.abspath(os.path.join(image_directory, image_filename))
+            
+            # 创建 metadata 条目
+            metadata = {"text": "二次元", "image": [image_path]}
+            f.write(json.dumps(metadata))
+            f.write("\n")
+```
