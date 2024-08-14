@@ -277,4 +277,24 @@ image
 
 示例图片：![121124788_p0](https://github.com/user-attachments/assets/c117ddce-f7aa-4d56-8c39-52b6577997f1)
 
+## 3.自动生成文本描述（暂未实现） ##
+
+使用预训练的自然语言处理模型（如OpenAI的CLIP或Hugging Face上的BERT模型），您可以将图片标签转换为自然语言描述。这些描述可以与图片配对，形成文生图数据集。
+
+**示例代码**：
+python复制代码from transformers import CLIPProcessor, CLIPModel
+from PIL import Image
+import requests
+
+model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
+processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
+
+image = Image.open("path_to_your_anime_image.jpg")
+inputs = processor(text=["a photo of an anime character"], images=image, return_tensors="pt", padding=True)
+
+outputs = model(**inputs)
+logits_per_image = outputs.logits_per_image
+probs = logits_per_image.softmax(dim=1)
+print(probs)
+
 
