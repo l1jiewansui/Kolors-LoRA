@@ -275,5 +275,6 @@ image
 
 爬取命令：python AIcrawler.py --ckpt 模型权重 --n_images 总图像个数 [--keyword 关键字] 
 
-示例图片：![Uploading 121124788_p0.jpg…]()
+示例图片：![121124788_p0](https://github.com/user-attachments/assets/c117ddce-f7aa-4d56-8c39-52b6577997f1)
+
 
