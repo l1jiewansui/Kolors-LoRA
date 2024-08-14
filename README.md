@@ -365,3 +365,16 @@ data_frame.to_csv("./data/lora_dataset_processed/train/metadata.csv", index=Fals
 
 print(data_frame)
 ```
+
+### 修改lora版本
+
+```
+lora_path="models/lightning_logs/version_1/checkpoints/epoch=0-step=500.ckpt"
+```
+
+图片对比
+
+![11](https://github.com/user-attachments/assets/392170df-91bb-41db-b3ef-2889eafaaf52)
+
+![1](https://github.com/user-attachments/assets/ea1a4079-f373-4804-a65a-556321c0095b)
+
