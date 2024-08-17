@@ -140,3 +140,19 @@ lora alpha = 4的默认配置是最稳定的。 lora rank在训练时可以通�
 
 提示词非常关键，可以直接决定图像质量好坏，一般需要按照 角色，视角，镜头，姿势，头发，面部，动作，身体，服装，场景，时间，天气，事物 的顺序安排
 
+## 测试结果展示和讨论
+
+正向提示词：二次元，genshin，genshin impact，ganyu，蓝发少女，白色背景
+
+反向提示词：模糊, 低分辨率, 变形, 扭曲, 噪点, 过曝, 欠曝, 丑陋, 不自然, 不完整, 错误颜色, 不对称, 低质量, 混乱, 杂乱, 错误比例, 伪影, 重影, 过度锐化
+
+genshin-impact-lora
+
+![image](https://github.com/user-attachments/assets/f1fbdfd2-6a43-46e4-874f-7c7614245225)
+
+ganyu-lora
+
+![image](https://github.com/user-attachments/assets/caa1f0c1-3002-4855-a3fd-2925d856e6a6)
+
+我们可以看到 ganyu-lora 可以更加准确地展示出角色的服饰细节，证明单人数据集的训练是有效的
+
