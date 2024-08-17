@@ -118,7 +118,25 @@ print(f"Aesthetic Score: {score}")
 
 ![87229432_p0](https://github.com/user-attachments/assets/5c8c5e99-834c-42cd-b31c-0c72cacb3b83)
 
-标签采用pixiv自带的标签
+标签采用pixiv自带的标签，数据集增强可以看https://www.modevol.com/episode/clib4cinm9s3j01mqapijdfq6
 
 但经过验证，效果并没有想象中那么好，主要是模型无法准确识别关键词（如ganyu）
+
+### 数据集风格
+
+1.由于是关键词筛选，无法做到数据集风格统一，群像数据集训练较为困难。
+
+2.单人数据集可以较为粗略地模仿角色的着装风格，如蓝色头发、犄角、黑色连裤袜等。
+
+### 训练迭代次数
+
+epoch=5较为适合，可以增强模型稳定性
+
+### lora rank和lora alpha
+
+lora alpha = 4的默认配置是最稳定的。 lora rank在训练时可以通过数据集类型选取
+
+### 提示词
+
+提示词非常关键，可以直接决定图像质量好坏，一般需要按照 角色，视角，镜头，姿势，头发，面部，动作，身体，服装，场景，时间，天气，事物 的顺序安排
 
