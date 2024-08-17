@@ -111,7 +111,14 @@ print(f"Aesthetic Score: {score}")
 
 ## 2.参数和数据集对lora质量的影响
 
+本次任务我选用了两个数据集，一个是群像数据集（pixiv爬取的关键词为genshin impact的图像集），一个是单人数据集（pixiv爬取的关键词为ganyu的图像集）
 
+示例：
+![103033648_p0](https://github.com/user-attachments/assets/fd8e5858-e4d1-4e0b-aa82-ffad44357e08)
 
+![87229432_p0](https://github.com/user-attachments/assets/5c8c5e99-834c-42cd-b31c-0c72cacb3b83)
 
+标签采用pixiv自带的标签
+
+但经过验证，效果并没有想象中那么好，主要是模型无法准确识别关键词（如ganyu）
 
