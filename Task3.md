@@ -1,4 +1,6 @@
-## Task3
+# Task3
+
+## 1.AI辅助理解代码
 
 ### 第一个单元格：安装和导入依赖
 
@@ -106,4 +108,10 @@ print(f"Aesthetic Score: {score}")
 - `print(f"Aesthetic Score: {score}")`：打印计算出来的美学分数。
 
 实现效果：![image](https://github.com/user-attachments/assets/f5dc5775-73fa-46ef-b7ad-d5a1ab6da54c)
+
+## 2.参数和数据集对lora质量的影响
+
+
+
+
 
