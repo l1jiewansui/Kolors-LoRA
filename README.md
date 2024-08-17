@@ -505,4 +505,5 @@ print(f"Aesthetic Score: {score}")
 - 通过 `evaluate("./images")` 调用之前定义的评估函数，对指定文件夹（`./images`）中的图像进行评估，并计算平均美学分数。
 - `print(f"Aesthetic Score: {score}")`：打印计算出来的美学分数。
 
-实现效果：![image](https://github.com/user-attachments/assets/a443b51b-790d-47d7-832a-43ac4f04ceaf)
+实现效果：![image](https://github.com/user-attachments/assets/f5dc5775-73fa-46ef-b7ad-d5a1ab6da54c)
+
